@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confeitaria Artesanal - Catálogo Interativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #3D2317;
+            --accent-orange: #E67E22;
+            --appetite-red: #922B21;
+            --bg-cream: #FFF5E1;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            color: var(--primary-dark);
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* Correção para que o título apareça após clicar no menu fixo */
+        section, #catalogo, #nossa-historia, #localizacao {
+            scroll-margin-top: 100px; 
+        }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Configuração dos Cards Quadrados com Movimento */
+        .product-card {
+            background: white;
+            border-radius: 2.5rem;
+            padding: 1.5rem;
+            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: 1px solid rgba(61, 35, 23, 0.05);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            cursor: pointer;
+            width: 280px; 
+            flex-shrink: 0; 
+            scroll-snap-align: center;
+        }
+
+        /* Efeito Pop-out */
+        .product-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 30px 60px -15px rgba(61, 35, 23, 0.25);
+            border-color: var(--accent-orange);
+        }
+
+        .img-container {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background-color: var(--bg-cream);
+            border-radius: 2rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            transition: transform 0.6s ease;
+        }
+
+        .product-card:hover .img-container {
+            transform: scale(1.04);
+        }
+
+        /* Slider Horizontal */
+        .slider-wrapper {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            padding: 1.5rem 3.5rem 2.5rem 3.5rem; 
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Lógica de Categorias Ocultas */
+        .category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+            opacity: 0;
+        }
+
+        .category-content.active {
+            max-height: 2000px;
+            opacity: 1;
+        }
+
+        .category-header {
+            transition: all 0.3s ease;
+            border-radius: 2.5rem;
+        }
+        
+        /* Botões Navegação */
+        .nav-btn {
+            background: var(--primary-dark);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 20;
+        }
+        
+        /* Menu Lateral Estilo Drawer */
+        #side-menu {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Botão WhatsApp Pulsante */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-item { animation: fadeInUp 0.6s ease forwards; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Menu Lateral (Drawer) -->
+    <div id="side-menu-overlay" class="fixed inset-0 bg-black/50 z-[100] hidden backdrop-blur-sm opacity-0 transition-opacity" onclick="toggleMenu()"></div>
+    <aside id="side-menu" class="fixed top-0 left-0 h-full w-full max-w-[300px] bg-[#3D2317] text-white z-[110] -translate-x-full shadow-2xl p-8 flex flex-col">
+        <div class="flex justify-between items-center mb-12">
+            <h2 class="text-xl font-bold uppercase tracking-widest text-[#E67E22]">Menu</h2>
+            <button onclick="toggleMenu()" class="text-2xl hover:rotate-90 transition-transform"><i class="fas fa-times"></i></button>
+        </div>
+        <nav class="space-y-6 text-lg font-medium">
+            <a href="#catalogo" onclick="toggleMenu()" class="block hover:text-[#E67E22] transition-colors border-b border-white/5 pb-2">Cardápio</a>
+            <a href="#nossa-historia" onclick="toggleMenu()" class="block hover:text-[#E67E22] transition-colors border-b border-white/5 pb-2">A Nossa História</a>
+            <a href="#localizacao" onclick="toggleMenu()" class="block hover:text-[#E67E22] transition-colors border-b border-white/5 pb-2">Localização</a>
+        </nav>
+        <div class="mt-auto pt-8 border-t border-white/10 text-sm opacity-50">
+            <p>© 2024 Confeitaria Artesanal</p>
+        </div>
+    </aside>
+
+    <!-- Navegação Superior -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md py-4 px-6 md:px-12 flex justify-between items-center shadow-sm">
+        <div class="flex items-center gap-4">
+            <button onclick="toggleMenu()" class="text-2xl text-[#3D2317] hover:text-[#E67E22] transition-colors">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="hidden sm:flex items-center gap-2">
+                <i class="fas fa-cookie-bite text-accent-orange text-2xl"></i>
+                <h1 class="text-xl font-bold tracking-tighter uppercase">Confeitaria <span class="text-[#E67E22]">Artesanal</span></h1>
+            </div>
+        </div>
+        <button onclick="toggleCart()" class="bg-[#3D2317] text-white p-3 rounded-2xl flex items-center gap-3 hover:scale-105 transition-transform relative">
+            <i class="fas fa-shopping-basket"></i>
+            <span id="cart-count" class="absolute -top-2 -right-2 bg-[#922B21] text-white text-[10px] w-6 h-6 rounded-full flex items-center justify-center font-bold border-2 border-white">0</span>
+        </button>
+    </nav>
+
+    <!-- Hero -->
+    <header class="py-16 md:py-24 px-6 text-center flex flex-col items-center justify-center">
+        <div class="max-w-3xl animate-item">
+            <h2 class="text-5xl md:text-7xl font-black mb-6 leading-tight text-[#3D2317]">Momentos <span class="text-[#922B21]">Doces</span> pedem bolos únicos.</h2>
+            <p class="text-lg opacity-70 mb-10">Explora a nossa montra e monta o teu carrinho com os sabores mais amados.</p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 md:px-6 space-y-12 pb-20">
+
+        <!-- TÍTULO DA SESSÃO DE CATEGORIAS -->
+        <div id="catalogo" class="text-center animate-item">
+            <h2 class="text-3xl md:text-5xl font-bold text-[#3D2317] mb-3">Conheça os nossos <span class="text-[#E67E22]">Sabores</span></h2>
+            <div class="w-24 h-1.5 bg-[#E67E22] mx-auto rounded-full mb-8"></div>
+        </div>
+
+        <div class="space-y-6">
+
+            <!-- CATEGORIA: TRADICIONAIS -->
+            <div class="bg-white/40 backdrop-blur-sm rounded-[3rem] shadow-lg border border-orange-100 overflow-hidden">
+                <div onclick="toggleCategory('cat-tradicionais')" class="category-header cursor-pointer p-8 flex justify-between items-center group">
+                    <div>
+                        <h3 class="text-2xl font-black uppercase text-[#3D2317] group-hover:text-[#E67E22] transition-colors">Bolos Tradicionais</h3>
+                        <p class="text-[#E67E22] font-bold">A partir de R$ 45,00 / KG</p>
+                    </div>
+                    <div class="w-12 h-12 bg-[#3D2317] text-white rounded-full flex items-center justify-center">
+                        <i class="fas fa-chevron-down transition-transform duration-500" id="icon-cat-tradicionais"></i>
+                    </div>
+                </div>
+                
+                <div id="cat-tradicionais" class="category-content">
+                    <div class="relative flex items-center group/slider">
+                        <button onclick="slide('slider-tradicionais', -1)" class="nav-btn absolute left-2 top-1/2 -translate-y-1/2"><i class="fas fa-chevron-left"></i></button>
+                        <div id="slider-tradicionais" class="slider-wrapper no-scrollbar">
+                            <!-- Card 1 -->
+                            <div class="product-card">
+                                <div class="img-container"><span class="text-[10px] font-bold text-orange-300 uppercase tracking-widest">[FOTO: CENOURA]</span></div>
+                                <h4 class="text-xl font-bold mb-2">Cenoura & Chocolate</h4>
+                                <p class="text-sm opacity-60 mb-6 flex-grow">Massa fofinha com cobertura de brigadeiro artesanal.</p>
+                                <div class="flex flex-col gap-3 mt-auto"><span class="font-black text-[#E67E22]">R$ 45,00 / KG</span><button onclick="addToCart('Bolo de Cenoura', 45)" class="bg-[#3D2317] text-white py-3 rounded-2xl font-bold">Adicionar ao Pedido</button></div>
+                            </div>
+                            <!-- Card 2 -->
+                            <div class="product-card">
+                                <div class="img-container"><span class="text-[10px] font-bold text-orange-300 uppercase tracking-widest">[FOTO: MILHO]</span></div>
+                                <h4 class="text-xl font-bold mb-2">Milho Cremoso</h4>
+                                <p class="text-sm opacity-60 mb-6 flex-grow">Aquele sabor de fazenda que todos amam.</p>
+                                <div class="flex flex-col gap-3 mt-auto"><span class="font-black text-[#E67E22]">R$ 48,00 / KG</span><button onclick="addToCart('Milho (KG)', 48)" class="bg-[#3D2317] text-white py-3 rounded-2xl font-bold">Adicionar ao Pedido</button></div>
+                            </div>
+                            <!-- Card 3 -->
+                            <div class="product-card">
+                                <div class="img-container"><span class="text-[10px] font-bold text-orange-300 uppercase tracking-widest">[FOTO: LARANJA]</span></div>
+                                <h4 class="text-xl font-bold mb-2">Laranja Natural</h4>
+                                <p class="text-sm opacity-60 mb-6 flex-grow">Refrescante e macio, feito com sumo puro.</p>
+                                <div class="flex flex-col gap-3 mt-auto"><span class="font-black text-[#E67E22]">R$ 40,00 / KG</span><button onclick="addToCart('Laranja (KG)', 40)" class="bg-[#3D2317] text-white py-3 rounded-2xl font-bold">Adicionar ao Pedido</button></div>
+                            </div>
+                            <!-- Card 4 -->
+                            <div class="product-card">
+                                <div class="img-container"><span class="text-[10px] font-bold text-orange-300 uppercase tracking-widest">[FOTO: FUBÁ]</span></div>
+                                <h4 class="text-xl font-bold mb-2">Fubá com Goiabada</h4>
+                                <p class="text-sm opacity-60 mb-6 flex-grow">O clássico do café da tarde com goiabada cascão.</p>
+                                <div class="flex flex-col gap-3 mt-auto"><span class="font-black text-[#E67E22]">R$ 42,00 / KG</span><button onclick="addToCart('Fubá (KG)', 42)" class="bg-[#3D2317] text-white py-3 rounded-2xl font-bold">Adicionar ao Pedido</button></div>
+                            </div>
+                        </div>
+                        <button onclick="slide('slider-tradicionais', 1)" class="nav-btn absolute right-2 top-1/2 -translate-y-1/2"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <!-- Botão de Fechar Sabores -->
+                    <div class="flex justify-center pb-8">
+                        <button onclick="toggleCategory('cat-tradicionais')" class="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-all text-[#3D2317]">
+                            <i class="fas fa-chevron-up group-hover:-translate-y-1 transition-transform"></i>
+                            Recolher Sabores
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATEGORIA: ESPECIAIS I -->
+            <div class="bg-white/40 backdrop-blur-sm rounded-[3rem] shadow-lg border border-orange-100 overflow-hidden">
+                <div onclick="toggleCategory('cat-esp1')" class="category-header cursor-pointer p-8 flex justify-between items-center group">
+                    <div>
+                        <h3 class="text-2xl font-black uppercase text-[#3D2317] group-hover:text-[#922B21] transition-colors">Especiais I</h3>
+                        <p class="text-[#922B21] font-bold">R$ 75,00 / KG</p>
+                    </div>
+                    <div class="w-12 h-12 bg-[#922B21] text-white rounded-full flex items-center justify-center">
+                        <i class="fas fa-chevron-down transition-transform duration-500" id="icon-cat-esp1"></i>
+                    </div>
+                </div>
+                <div id="cat-esp1" class="category-content">
+                    <div class="relative flex items-center group/slider">
+                        <button onclick="slide('slider-esp1', -1)" class="nav-btn absolute left-2 top-1/2 -translate-y-1/2"><i class="fas fa-chevron-left"></i></button>
+                        <div id="slider-esp1" class="slider-wrapper no-scrollbar">
+                            <div class="product-card">
+                                <div class="img-container"><span class="text-[10px] font-bold text-red-200 uppercase">[FOTO: NINHO]</span></div>
+                                <h4 class="text-xl font-bold mb-2">Ninho com Nutella</h4>
+                                <p class="text-sm opacity-60 mb-6 flex-grow">O queridinho em camadas generosas.</p>
+                                <div class="flex flex-col gap-3 mt-auto"><span class="font-black text-[#922B21]">R$ 75,00 / KG</span><button onclick="addToCart('Ninho Nutella', 75)" class="bg-[#922B21] text-white py-3 rounded-2xl font-bold">Pedir</button></div>
+                            </div>
+                            <div class="product-card">
+                                <div class="img-container"><span class="text-[10px] font-bold text-red-200 uppercase">[FOTO: BRIGADEIRO]</span></div>
+                                <h4 class="text-xl font-bold mb-2">Brigadeiro Belga</h4>
+                                <p class="text-sm opacity-60 mb-6 flex-grow">Chocolate 50% cacau premium.</p>
+                                <div class="flex flex-col gap-3 mt-auto"><span class="font-black text-[#922B21]">R$ 75,00 / KG</span><button onclick="addToCart('Brigadeiro Belga', 75)" class="bg-[#922B21] text-white py-3 rounded-2xl font-bold">Pedir</button></div>
+                            </div>
+                            <div class="product-card">
+                                <div class="img-container"><span class="text-[10px] font-bold text-red-200 uppercase">[FOTO: ABACAXI]</span></div>
+                                <h4 class="text-xl font-bold mb-2">Abacaxi com Côco</h4>
+                                <p class="text-sm opacity-60 mb-6 flex-grow">Fruta fresca com creme suave.</p>
+                                <div class="flex flex-col gap-3 mt-auto"><span class="font-black text-[#922B21]">R$ 75,00 / KG</span><button onclick="addToCart('Abacaxi Côco', 75)" class="bg-[#922B21] text-white py-3 rounded-2xl font-bold">Pedir</button></div>
+                            </div>
+                            <div class="product-card">
+                                <div class="img-container"><span class="text-[10px] font-bold text-red-200 uppercase">[FOTO: PRESTIGIO]</span></div>
+                                <h4 class="text-xl font-bold mb-2">Prestígio Supremo</h4>
+                                <p class="text-sm opacity-60 mb-6 flex-grow">Recheio cremoso de côco ralado.</p>
+                                <div class="flex flex-col gap-3 mt-auto"><span class="font-black text-[#922B21]">R$ 75,00 / KG</span><button onclick="addToCart('Prestigio', 75)" class="bg-[#922B21] text-white py-3 rounded-2xl font-bold">Pedir</button></div>
+                            </div>
+                        </div>
+                        <button onclick="slide('slider-esp1', 1)" class="nav-btn absolute right-2 top-1/2 -translate-y-1/2"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="flex justify-center pb-8"><button onclick="toggleCategory('cat-esp1')" class="group flex items-center gap-2 text-xs font-bold uppercase opacity-40 text-[#3D2317]"><i class="fas fa-chevron-up"></i>Recolher</button></div>
+                </div>
+            </div>
+
+            <!-- ESPECIAIS II -->
+            <div class="bg-white/40 backdrop-blur-sm rounded-[3rem] shadow-lg border border-orange-100 overflow-hidden">
+                <div onclick="toggleCategory('cat-esp2')" class="category-header cursor-pointer p-8 flex justify-between items-center group">
+                    <div>
+                        <h3 class="text-2xl font-black uppercase text-[#3D2317] group-hover:text-[#922B21] transition-colors">Especiais II</h3>
+                        <p class="text-[#922B21] font-bold">R$ 90,00 / KG</p>
+                    </div>
+                    <div class="w-12 h-12 bg-[#922B21] text-white rounded-full flex items-center justify-center">
+                        <i class="fas fa-chevron-down transition-transform duration-500" id="icon-cat-esp2"></i>
+                    </div>
+                </div>
+                <div id="cat-esp2" class="category-content">
+                    <div class="relative flex items-center group/slider">
+                        <button onclick="slide('slider-esp2', -1)" class="nav-btn absolute left-2 top-1/2 -translate-y-1/2"><i class="fas fa-chevron-left"></i></button>
+                        <div id="slider-esp2" class="slider-wrapper no-scrollbar">
+                            <div class="product-card">
+                                <div class="img-container"><span class="text-[10px] font-bold text-red-200 uppercase">[FOTO: RED VELVET]</span></div>
+                                <h4 class="text-xl font-bold mb-2">Red Velvet Premium</h4>
+                                <p class="text-sm opacity-60 mb-6 flex-grow">Massa aveludada com cream cheese.</p>
+                                <div class="flex flex-col gap-3 mt-auto"><span class="font-black text-[#922B21]">R$ 90,00 / KG</span><button onclick="addToCart('Red Velvet', 90)" class="bg-[#922B21] text-white py-3 rounded-2xl font-bold">Pedir</button></div>
+                            </div>
+                            <div class="product-card">
+                                <div class="img-container"><span class="text-[10px] font-bold text-red-200 uppercase">[FOTO: CHURROS]</span></div>
+                                <h4 class="text-xl font-bold mb-2">Churros Gourmet</h4>
+                                <p class="text-sm opacity-60 mb-6 flex-grow">Doce de leite com canela e amor.</p>
+                                <div class="flex flex-col gap-3 mt-auto"><span class="font-black text-[#922B21]">R$ 90,00 / KG</span><button onclick="addToCart('Churros', 90)" class="bg-[#922B21] text-white py-3 rounded-2xl font-bold">Pedir</button></div>
+                            </div>
+                            <div class="product-card">
+                                <div class="img-container"><span class="text-[10px] font-bold text-red-200 uppercase">[FOTO: LIMÃO]</span></div>
+                                <h4 class="text-xl font-bold mb-2">Limão Siciliano</h4>
+                                <p class="text-sm opacity-60 mb-6 flex-grow">Refrescante com mousse cremosa.</p>
+                                <div class="flex flex-col gap-3 mt-auto"><span class="font-black text-[#922B21]">R$ 90,00 / KG</span><button onclick="addToCart('Limão', 90)" class="bg-[#922B21] text-white py-3 rounded-2xl font-bold">Pedir</button></div>
+                            </div>
+                            <div class="product-card">
+                                <div class="img-container"><span class="text-[10px] font-bold text-red-200 uppercase">[FOTO: FRUTAS]</span></div>
+                                <h4 class="text-xl font-bold mb-2">Frutas Vermelhas</h4>
+                                <p class="text-sm opacity-60 mb-6 flex-grow">Mix de amora, morango e framboesa.</p>
+                                <div class="flex flex-col gap-3 mt-auto"><span class="font-black text-[#922B21]">R$ 90,00 / KG</span><button onclick="addToCart('Frutas Vermelhas', 90)" class="bg-[#922B21] text-white py-3 rounded-2xl font-bold">Pedir</button></div>
+                            </div>
+                        </div>
+                        <button onclick="slide('slider-esp2', 1)" class="nav-btn absolute right-2 top-1/2 -translate-y-1/2"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="flex justify-center pb-8"><button onclick="toggleCategory('cat-esp2')" class="group flex items-center gap-2 text-xs font-bold uppercase opacity-40 text-[#3D2317]"><i class="fas fa-chevron-up"></i>Recolher</button></div>
+                </div>
+            </div>
+
+            <!-- ESPECIAIS III -->
+            <div class="bg-white/40 backdrop-blur-sm rounded-[3rem] shadow-lg border border-orange-100 overflow-hidden">
+                <div onclick="toggleCategory('cat-esp3')" class="category-header cursor-pointer p-8 flex justify-between items-center group">
+                    <div>
+                        <h3 class="text-2xl font-black uppercase text-[#3D2317] group-hover:text-[#922B21] transition-colors">Especiais III</h3>
+                        <p class="text-[#922B21] font-bold">R$ 110,00 / KG</p>
+                    </div>
+                    <div class="w-12 h-12 bg-[#922B21] text-white rounded-full flex items-center justify-center">
+                        <i class="fas fa-chevron-down transition-transform duration-500" id="icon-cat-esp3"></i>
+                    </div>
+                </div>
+                <div id="cat-esp3" class="category-content">
+                    <div class="relative flex items-center group/slider">
+                        <button onclick="slide('slider-esp3', -1)" class="nav-btn absolute left-2 top-1/2 -translate-y-1/2"><i class="fas fa-chevron-left"></i></button>
+                        <div id="slider-esp3" class="slider-wrapper no-scrollbar">
+                            <div class="product-card">
+                                <div class="img-container"><span class="text-[10px] font-bold text-red-200 uppercase">[FOTO: DOIS AMORES]</span></div>
+                                <h4 class="text-xl font-bold mb-2">Dois Amores Gourmet</h4>
+                                <p class="text-sm opacity-60 mb-6 flex-grow">Brigadeiro branco e preto belga.</p>
+                                <div class="flex flex-col gap-3 mt-auto"><span class="font-black text-[#922B21]">R$ 110,00 / KG</span><button onclick="addToCart('Dois Amores', 110)" class="bg-[#922B21] text-white py-3 rounded-2xl font-bold">Pedir</button></div>
+                            </div>
+                            <div class="product-card">
+                                <div class="img-container"><span class="text-[10px] font-bold text-red-200 uppercase">[FOTO: BANOFFEE]</span></div>
+                                <h4 class="text-xl font-bold mb-2">Bolo Banoffee</h4>
+                                <p class="text-sm opacity-60 mb-6 flex-grow">Banana com doce de leite artesanal.</p>
+                                <div class="flex flex-col gap-3 mt-auto"><span class="font-black text-[#922B21]">R$ 110,00 / KG</span><button onclick="addToCart('Banoffee', 110)" class="bg-[#922B21] text-white py-3 rounded-2xl font-bold">Pedir</button></div>
+                            </div>
+                            <div class="product-card">
+                                <div class="img-container"><span class="text-[10px] font-bold text-red-200 uppercase">[FOTO: KINDER]</span></div>
+                                <h4 class="text-xl font-bold mb-2">Kinder Bueno</h4>
+                                <p class="text-sm opacity-60 mb-6 flex-grow">Creme de avelã com chocolate kinder.</p>
+                                <div class="flex flex-col gap-3 mt-auto"><span class="font-black text-[#922B21]">R$ 110,00 / KG</span><button onclick="addToCart('Kinder', 110)" class="bg-[#922B21] text-white py-3 rounded-2xl font-bold">Pedir</button></div>
+                            </div>
+                            <div class="product-card">
+                                <div class="img-container"><span class="text-[10px] font-bold text-red-200 uppercase">[FOTO: FERRERO]</span></div>
+                                <h4 class="text-xl font-bold mb-2">Ferrero Rocher</h4>
+                                <p class="text-sm opacity-60 mb-6 flex-grow">Avelã crocante premium.</p>
+                                <div class="flex flex-col gap-3 mt-auto"><span class="font-black text-[#922B21]">R$ 110,00 / KG</span><button onclick="addToCart('Ferrero', 110)" class="bg-[#922B21] text-white py-3 rounded-2xl font-bold">Pedir</button></div>
+                            </div>
+                        </div>
+                        <button onclick="slide('slider-esp3', 1)" class="nav-btn absolute right-2 top-1/2 -translate-y-1/2"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="flex justify-center pb-8"><button onclick="toggleCategory('cat-esp3')" class="group flex items-center gap-2 text-xs font-bold uppercase opacity-40 text-[#3D2317]"><i class="fas fa-chevron-up"></i>Recolher</button></div>
+                </div>
+            </div>
+
+            <!-- CATEGORIA: NOBRES (DARK) -->
+            <div class="bg-[#3D2317] rounded-[3rem] shadow-2xl border border-white/5 overflow-hidden">
+                <div onclick="toggleCategory('cat-nobres')" class="category-header cursor-pointer p-8 flex justify-between items-center bg-gradient-to-br from-[#3D2317] to-[#2D1B14] group">
+                    <div>
+                        <h3 class="text-2xl font-black uppercase text-[#E67E22] group-hover:brightness-110 transition-all">Linha Nobre</h3>
+                        <p class="text-white/50 font-bold italic">R$ 185,00 - R$ 250,00 / KG</p>
+                    </div>
+                    <div class="w-12 h-12 bg-[#E67E22] text-white rounded-full flex items-center justify-center">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                </div>
+                <div id="cat-nobres" class="category-content">
+                    <div class="relative flex items-center group/slider">
+                        <button onclick="slide('slider-nobre', -1)" class="nav-btn absolute left-2 top-1/2 -translate-y-1/2 !bg-[#E67E22]"><i class="fas fa-chevron-left"></i></button>
+                        <div id="slider-nobre" class="slider-wrapper no-scrollbar">
+                            <div class="product-card !bg-white/5 !border-white/10 !text-white">
+                                <div class="img-container !bg-white/5"><span class="text-[10px] text-orange-200/40 uppercase tracking-widest">[FOTO: PISTACHE]</span></div>
+                                <h4 class="text-2xl font-bold mb-2">Pistache Siciliano</h4>
+                                <p class="text-sm opacity-50 mb-8 flex-grow">Ganache pura de pistache verde importado.</p>
+                                <div class="flex flex-col gap-4 mt-auto"><span class="text-3xl font-black text-[#E67E22]">R$ 185,00</span><button onclick="addToCart('Pistache Nobre', 185)" class="bg-[#E67E22] text-white py-4 rounded-2xl font-bold">Selecionar</button></div>
+                            </div>
+                            <div class="product-card !bg-white/5 !border-white/10 !text-white">
+                                <div class="img-container !bg-white/5"><span class="text-[10px] text-orange-200/40 uppercase tracking-widest">[FOTO: OURO]</span></div>
+                                <h4 class="text-2xl font-bold mb-2">Trufa de Ouro</h4>
+                                <p class="text-sm opacity-50 mb-8 flex-grow">Belga 70% com folha de ouro real.</p>
+                                <div class="flex flex-col gap-4 mt-auto"><span class="text-3xl font-black text-[#E67E22]">R$ 210,00</span><button onclick="addToCart('Trufa de Ouro', 210)" class="bg-[#E67E22] text-white py-4 rounded-2xl font-bold">Selecionar</button></div>
+                            </div>
+                            <div class="product-card !bg-white/5 !border-white/10 !text-white">
+                                <div class="img-container !bg-white/5"><span class="text-[10px] text-orange-200/40 uppercase tracking-widest">[FOTO: FERRERO]</span></div>
+                                <h4 class="text-xl font-bold mb-2 text-white">Ferrero Luxury</h4>
+                                <p class="text-sm opacity-50 mb-8 flex-grow">Avelãs torradas e creme italiano intenso.</p>
+                                <div class="flex flex-col gap-4 mt-auto"><span class="text-3xl font-black text-[#E67E22]">R$ 225,00</span><button onclick="addToCart('Ferrero Luxury', 225)" class="bg-[#E67E22] text-white py-4 rounded-2xl font-bold">Selecionar</button></div>
+                            </div>
+                            <div class="product-card !bg-white/5 !border-white/10 !text-white">
+                                <div class="img-container !bg-white/5"><span class="text-[10px] text-orange-200/40 uppercase tracking-widest">[FOTO: DAMASCO]</span></div>
+                                <h4 class="text-xl font-bold mb-2 text-white">Damasco Imperial</h4>
+                                <p class="text-sm opacity-50 mb-8 flex-grow">Compota de damasco artesanal com nozes.</p>
+                                <div class="flex flex-col gap-4 mt-auto"><span class="text-3xl font-black text-[#E67E22]">R$ 250,00</span><button onclick="addToCart('Damasco Imperial', 250)" class="bg-[#E67E22] text-white py-4 rounded-2xl font-bold">Selecionar</button></div>
+                            </div>
+                        </div>
+                        <button onclick="slide('slider-nobre', 1)" class="nav-btn absolute right-2 top-1/2 -translate-y-1/2 !bg-[#E67E22]"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="flex justify-center pb-8"><button onclick="toggleCategory('cat-nobres')" class="group flex items-center gap-2 text-xs font-bold uppercase opacity-60 text-[#E67E22] hover:opacity-100 transition-all"><i class="fas fa-chevron-up"></i>Recolher</button></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SESSÃO: HISTÓRIA -->
+        <section id="nossa-historia" class="bg-white rounded-[4rem] p-10 md:p-20 shadow-xl flex flex-col md:flex-row items-center gap-12 relative overflow-hidden">
+            <div class="flex-1 space-y-6">
+                <span class="text-[#E67E22] font-bold uppercase tracking-[0.2em] text-sm">Desde 1995</span>
+                <h3 class="text-4xl md:text-5xl font-black text-[#3D2317]">Uma Doce <span class="text-[#922B21]">História</span></h3>
+                <p class="text-lg opacity-80 leading-relaxed">
+                    Tudo começou na cozinha da minha avó, onde o aroma de bolo assando era um convite para o afeto. Hoje, mantemos essa essência: feitos à mão, com os melhores ingredientes e o carinho de sempre.
+                </p>
+                <div class="flex items-center gap-4 pt-4"><i class="fas fa-heart text-[#E67E22] text-xl"></i><p class="font-bold italic">Feito com Amor em Curitiba</p></div>
+            </div>
+            <div class="flex-1 w-full h-[400px] bg-[#FFF5E1] rounded-[3rem] flex items-center justify-center text-orange-200 font-bold uppercase tracking-widest border-4 border-[#3D2317]/5">[Foto: A Nossa História]</div>
+        </section>
+
+        <!-- SESSÃO: LOCALIZAÇÃO -->
+        <section id="localizacao" class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+            <div class="bg-[#3D2317] text-white rounded-[4rem] p-10 md:p-16 flex flex-col justify-center shadow-2xl">
+                <h3 class="text-3xl font-bold mb-6 italic">Onde estamos</h3>
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4"><i class="fas fa-map-marker-alt text-2xl text-[#E67E22]"></i><div><p class="font-bold text-lg">Rua das Amêndoas, 456</p><p class="opacity-60 text-sm">Curitiba / PR</p></div></div>
+                    <div class="flex items-start gap-4"><i class="fas fa-clock text-2xl text-[#E67E22]"></i><div><p class="font-bold text-lg text-white">Segunda a Sábado</p><p class="opacity-60 text-sm">09h às 19h</p></div></div>
+                </div>
+            </div>
+            <div class="bg-[#E67E22]/10 rounded-[4rem] border-2 border-dashed border-[#E67E22]/30 flex items-center justify-center text-[#E67E22] font-bold uppercase text-xs tracking-widest min-h-[300px] text-center p-6">[Mapa Interativo Aqui]</div>
+        </section>
+
+    </main>
+
+    <!-- WhatsApp Fixo -->
+    <a href="https://wa.me/5511999999999" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- Footer -->
+    <footer class="bg-[#3D2317] text-white pt-20 pb-10 text-center">
+        <div class="max-w-7xl mx-auto px-6">
+            <h4 class="text-3xl font-black uppercase tracking-tighter mb-8">Confeitaria <span class="text-[#E67E22]">Artesanal</span></h4>
+            <div class="flex justify-center gap-8 text-3xl mb-16">
+                <a href="#" class="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center hover:bg-[#E4405F] transition-all"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center hover:bg-[#1877F2] transition-all"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center hover:bg-[#25D366] transition-all"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p class="text-xs opacity-40 uppercase tracking-[0.3em]">Qualidade • Amor • Tradição</p>
+        </div>
+    </footer>
+
+    <!-- Carrinho Lateral -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black/60 z-[60] hidden backdrop-blur-sm opacity-0 transition-opacity" onclick="toggleCart()"></div>
+    <aside id="cart-sidebar" class="fixed top-0 right-0 h-full w-full max-w-md bg-white z-[70] translate-x-full transition-transform duration-500 flex flex-col shadow-2xl">
+        <div class="p-8 border-b bg-orange-50 flex justify-between items-center"><h3 class="text-2xl font-bold uppercase text-[#3D2317]">Seu Pedido</h3><button onclick="toggleCart()" class="text-red-500 text-2xl hover:rotate-90 transition-transform"><i class="fas fa-times"></i></button></div>
+        <div id="cart-items" class="flex-grow overflow-y-auto p-8 space-y-4 no-scrollbar"></div>
+        <div class="p-8 border-t space-y-4">
+            <div class="flex justify-between items-end"><span class="text-sm opacity-60 uppercase font-bold">Total</span><span id="cart-total" class="text-3xl font-black text-[#922B21]">R$ 0,00</span></div>
+            <input type="text" id="client-name" placeholder="Como te chamamos?" class="w-full bg-orange-50 rounded-2xl p-4 focus:outline-none border-2 border-transparent focus:border-[#E67E22]">
+            <button onclick="finalizeOrder()" class="w-full bg-[#25D366] text-white py-5 rounded-2xl font-bold flex items-center justify-center gap-3">
+                <i class="fab fa-whatsapp text-2xl"></i> Finalizar no WhatsApp
+            </button>
+        </div>
+    </aside>
+
+    <script>
+        // --- MENU LATERAL ---
+        function toggleMenu() {
+            const menu = document.getElementById('side-menu');
+            const overlay = document.getElementById('side-menu-overlay');
+            const isOpen = !menu.classList.contains('-translate-x-full');
+            if (isOpen) {
+                menu.classList.add('-translate-x-full');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 400);
+            } else {
+                overlay.classList.remove('hidden');
+                setTimeout(() => { overlay.classList.remove('opacity-0'); menu.classList.remove('-translate-x-full'); }, 10);
+            }
+        }
+
+        // --- NAVEGAÇÃO DO SLIDER ---
+        function slide(id, direction) {
+            const el = document.getElementById(id);
+            const step = 310; 
+            el.scrollBy({ left: direction * step, behavior: 'smooth' });
+        }
+
+        // --- LÓGICA DE CATEGORIAS COM AJUSTE DE FOCO ---
+        function toggleCategory(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            const isOpen = content.classList.contains('active');
+            
+            content.classList.toggle('active');
+            
+            // Ajuste de scroll ao abrir ou fechar
+            setTimeout(() => {
+                const element = content.parentElement;
+                const menuHeight = 90;
+                const y = element.getBoundingClientRect().top + window.pageYOffset - menuHeight;
+                window.scrollTo({top: y, behavior: 'smooth'});
+            }, 350);
+            
+            if(icon) icon.style.transform = !isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        // --- PARTÍCULAS NO FUNDO ---
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function initCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 4 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.8;
+                this.speedY = (Math.random() - 0.5) * 0.8;
+                this.alpha = Math.random() * 0.3 + 0.1;
+            }
+            update() {
+                this.x += this.speedX; this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+            }
+            draw() {
+                ctx.fillStyle = `rgba(230, 126, 34, ${this.alpha})`;
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+            }
+        }
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+        for (let i = 0; i < 40; i++) particles.push(new Particle());
+        function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
+        animate();
+
+        // --- CARRINHO E WHATSAPP ---
+        let cart = [];
+        const WHATSAPP_NUMBER = "5511999999999";
+        function addToCart(name, price) {
+            cart.push({ id: Date.now(), name, price });
+            updateCartUI();
+            const badge = document.getElementById('cart-count');
+            badge.classList.add('scale-150');
+            setTimeout(() => badge.classList.remove('scale-150'), 300);
+        }
+        function removeFromCart(id) { cart = cart.filter(item => item.id !== id); updateCartUI(); }
+        function updateCartUI() {
+            const container = document.getElementById('cart-items');
+            const totalDisplay = document.getElementById('cart-total');
+            const countDisplay = document.getElementById('cart-count');
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="text-center py-20 opacity-30 italic">O seu carrinho está vazio...</div>`;
+                totalDisplay.innerText = `R$ 0,00`; countDisplay.innerText = '0';
+                return;
+            }
+            container.innerHTML = cart.map(item => `
+                <div class="flex justify-between items-center bg-orange-50 p-4 rounded-2xl animate-item">
+                    <div><p class="font-bold text-[#3D2317] text-sm">${item.name}</p><p class="text-[#E67E22] font-bold text-xs">R$ ${item.price.toFixed(2).replace('.', ',')}</p></div>
+                    <button onclick="removeFromCart(${item.id})" class="text-red-400 p-2"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            `).join('');
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            totalDisplay.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            countDisplay.innerText = cart.length;
+        }
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('cart-overlay');
+            const isOpen = !sidebar.classList.contains('translate-x-full');
+            if (isOpen) {
+                sidebar.classList.add('translate-x-full');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 500);
+            } else {
+                overlay.classList.remove('hidden');
+                setTimeout(() => { overlay.classList.remove('opacity-0'); sidebar.classList.remove('translate-x-full'); }, 10);
+            }
+        }
+        function finalizeOrder() {
+            if (cart.length === 0) return alert("Selecione pelo menos um bolo!");
+            const name = document.getElementById('client-name').value;
+            if (!name) return alert("Indique o seu nome para o pedido!");
+            let msg = `*🧁 NOVO PEDIDO - CONFEITARIA*%0A%0A*Cliente:* ${name}%0A----------------------------%0A`;
+            cart.forEach(i => msg += `• ${i.name} (R$ ${i.price.toFixed(2).replace('.', ',')})%0A`);
+            const total = cart.reduce((s, i) => s + i.price, 0);
+            msg += `----------------------------%0A*TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*%0A%0A_Pedido realizado via site._`;
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+        }
+    </script>
+</body>
+</html>
