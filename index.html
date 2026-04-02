@@ -182,6 +182,28 @@
             gap: 10px;
             font-size: 13px;
         }
+  
+    .shimmer-btn {
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(
+            to right, 
+            transparent, 
+            rgba(255, 255, 255, 0.3), 
+            transparent
+        );
+        transform: skewX(-30deg);
+        animation: shine-btn 3s infinite;
+    }
+
+    @keyframes shine-btn {
+        0% { left: -100%; }
+        20% { left: 150%; }
+        100% { left: 150%; }
+    }
 
         @keyframes slideUp {
             from {
@@ -602,59 +624,57 @@
             </div>
         </section>
 
-<section id="instagram-feed" class="max-w-7xl mx-auto px-4 py-16">
-    <div class="bg-white rounded-[3rem] p-6 md:p-12 border border-orange-100 shadow-sm flex flex-col items-center">
-        
-        <div class="text-center mb-8">
-            <div class="inline-flex items-center gap-2 bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white px-4 py-1 rounded-full mb-4 shadow-md">
-                <i class="fab fa-instagram text-xs"></i>
-                <span class="text-[10px] font-bold uppercase tracking-widest text-white">Instagram</span>
+        <section id="instagram-feed" class="max-w-7xl mx-auto px-4 py-16 overflow-hidden">
+            <div
+                class="bg-white rounded-[2rem] md:rounded-[3rem] p-4 md:p-12 border border-orange-100 shadow-sm flex flex-col items-center">
+
+                <div class="text-center mb-6 md:mb-8">
+                    <div
+                        class="inline-flex items-center gap-2 bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white px-4 py-1 rounded-full mb-4 shadow-md">
+                        <i class="fab fa-instagram text-xs"></i>
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-white">Instagram</span>
+                    </div>
+                    <h3 class="text-2xl md:text-4xl font-black text-[#3D2317] tracking-tighter leading-tight">
+                        Siga nosso <span class="text-[#E67E22]">Trabalho</span>
+                    </h3>
+                </div>
+
+                <div class="w-full max-w-full flex justify-center">
+                    <div
+                        class="instagram-wrapper w-full max-w-[540px] rounded-2xl md:rounded-3xl shadow-xl border-2 md:border-8 border-orange-50 bg-white overflow-hidden">
+
+                        <blockquote class="instagram-media" data-instgrm-captioned
+                            data-instgrm-permalink="https://www.instagram.com/reel/DWSO92REUO9/?utm_source=ig_embed&amp;utm_campaign=loading"
+                            data-instgrm-version="14"
+                            style="background:#FFF; border:0; border-radius:15px; margin: 0; width:100%; min-width: 0 !important; display: block;">
+                        </blockquote>
+
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <a href="https://www.instagram.com/cordeaboborabolos" target="_blank"
+                        class="bg-[#3D2317] text-white px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl font-bold text-xs md:text-sm hover:bg-[#E67E22] transition-all flex items-center gap-3 shadow-lg group">
+                        <i class="fab fa-instagram text-lg md:text-xl group-hover:rotate-12 transition-transform"></i>
+                        @CORDEABOBORABOLOS
+                    </a>
+                </div>
             </div>
-            <h3 class="text-3xl md:text-4xl font-black text-[#3D2317] tracking-tighter">
-                Siga nosso <span class="text-[#E67E22]">Trabalho</span>
-            </h3>
+        </section>
+        <script async src="//www.instagram.com/embed.js"></script>
+        <div class="flex justify-center py-8">
+            <button onclick="directWhatsApp('Quero viver a experiência deliciosa da Cor de Abóbora!')"
+                class="group relative bg-[#D2122E] text-white px-10 py-6 rounded-2xl font-black text-sm md:text-base uppercase tracking-widest shadow-[0_10px_40px_rgba(210,18,46,0.4)] hover:bg-[#B01026] transition-all hover:-translate-y-2 active:scale-95 flex items-center gap-4 overflow-hidden">
+
+                <span class="relative z-10">Viver essa experiência agora!</span>
+                <i class="fas fa-arrow-right relative z-10 group-hover:translate-x-2 transition-transform"></i>
+
+                <div class="absolute inset-0 w-full h-full">
+                    <div class="shimmer-btn"></div>
+                </div>
+            </button>
         </div>
 
-        <div class="w-full flex justify-center overflow-visible">
-            <div class="instagram-container w-full max-w-[540px] rounded-3xl shadow-2xl border-4 md:border-8 border-orange-50 bg-white">
-                
-                <blockquote class="instagram-media" 
-                    data-instgrm-captioned 
-                    data-instgrm-permalink="https://www.instagram.com/reel/DWSO92REUO9/?utm_source=ig_embed&amp;utm_campaign=loading" 
-                    data-instgrm-version="14" 
-                    style="background:#FFF; border:0; border-radius:15px; margin: 0; width:100%;">
-                    </blockquote>
-                
-            </div>
-        </div>
-
-        <div class="mt-8">
-            <a href="https://www.instagram.com/cordeaboborabolos" target="_blank" 
-               class="bg-[#3D2317] text-white px-8 py-4 rounded-2xl font-bold text-sm hover:bg-[#E67E22] transition-all flex items-center gap-3 shadow-lg group">
-               <i class="fab fa-instagram text-xl group-hover:rotate-12 transition-transform"></i>
-               @CORDEABOBORABOLOS
-            </a>
-        </div>
-    </div>
-</section>
-
-<script async src="//www.instagram.com/embed.js"></script>
-
-<style>
-    /* Correção para o card não cortar e permitir o play */
-    .instagram-container {
-        min-height: 400px; /* Garante espaço inicial antes do carregamento */
-        transition: height 0.3s ease;
-    }
-    
-    /* Força o iframe do Instagram a ocupar 100% do container sem margens extras */
-    iframe.instagram-media {
-        margin: 0 !important;
-        border-radius: 15px !important;
-        width: 100% !important;
-    }
-</style>
-        
     </main>
 
     <!-- Carrinho Lateral -->
@@ -840,7 +860,7 @@
                     { name: 'Abacaxi Coco Sweet', desc: 'Abacaxi fresco com Delicioso creme belga.', img: 'img/abacaxi-coco-especial2.jpeg' },
                     { name: 'Nutella com Morango', desc: 'Nutella pura com morangos frescos fatiados.', img: 'img/nutella-morango-especial4.jpeg' },
                     { name: 'Ninho e Nutella', desc: 'A dupla mais amada: Leite Ninho e Nutella.', img: 'img/ninho-nutella-especial5.jpeg' },
-                    
+
 
                 ]
             },
@@ -860,7 +880,7 @@
                     { name: 'Ninho e Frutas Vermelhas', desc: 'Ninho com geleia artesanal de amora, morango e framboesa.', img: 'img/ninho-geleia-frutas-nobre.jpeg' },
                     { name: 'Choco Amargo e Morango', desc: 'Sofisticação do chocolate meio amargo com morangos.', img: '' },
                     { name: 'Pistache Natural', desc: 'O legítimo brigadeiro de pistache com pistaches inteiros.', img: '' }
-                   
+
                 ]
             }
         ];
