@@ -182,28 +182,34 @@
             gap: 10px;
             font-size: 13px;
         }
-  
-    .shimmer-btn {
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 50%;
-        height: 100%;
-        background: linear-gradient(
-            to right, 
-            transparent, 
-            rgba(255, 255, 255, 0.3), 
-            transparent
-        );
-        transform: skewX(-30deg);
-        animation: shine-btn 3s infinite;
-    }
 
-    @keyframes shine-btn {
-        0% { left: -100%; }
-        20% { left: 150%; }
-        100% { left: 150%; }
-    }
+        .shimmer-btn {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right,
+                    transparent,
+                    rgba(255, 255, 255, 0.3),
+                    transparent);
+            transform: skewX(-30deg);
+            animation: shine-btn 3s infinite;
+        }
+
+        @keyframes shine-btn {
+            0% {
+                left: -100%;
+            }
+
+            20% {
+                left: 150%;
+            }
+
+            100% {
+                left: 150%;
+            }
+        }
 
         @keyframes slideUp {
             from {
@@ -215,6 +221,61 @@
                 transform: translateY(0);
                 opacity: 1;
             }
+        }
+
+        /* 1. Surgimento de cima para baixo (10 Anos) */
+        @keyframes fade-down {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 2. Surgimento de baixo para cima com brilho (Título Principal) */
+        @keyframes fade-up-gold {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 3. Linha que cresce do centro */
+        @keyframes grow-line {
+            from {
+                opacity: 0;
+                width: 0;
+            }
+
+            to {
+                opacity: 1;
+                width: 48px;
+            }
+        }
+
+        /* Aplicação das classes com Delays para Mobile-First */
+        .animate-fade-down {
+            animation: fade-down 0.8s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+
+        .animate-fade-up-gold {
+            animation: fade-up-gold 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation-delay: 0.6s;
+        }
+
+        .animate-grow-line {
+            animation: grow-line 0.8s ease-out forwards;
+            animation-delay: 1.2s;
         }
     </style>
 </head>
@@ -275,32 +336,41 @@
 
     <!-- Cabeçalho (Hero) -->
     <header class="py-12 md:py-20 px-6 text-center flex flex-col items-center justify-center">
-        <div class="relative flex justify-center items-center mb-8 md:mb-12 px-4 group">
-
-            <div class="absolute -top-6 -right-6 md:-top-10 md:-right-4 w-24 md:w-32 lg:w-40 z-20 pointer-events-none">
-                <img src="img/selo-10-anos.png" alt="Selo 10 Anos - Desde 2015" class="w-full h-full object-contain">
-            </div>
-
-            <img src="img/logo.png" alt="Cor de Abóbora Confeitaria"
-                class="w-auto h-48 md:h-64 lg:h-80 object-contain mx-auto transition-transform duration-500 group-hover:scale-105"
-                onerror="this.src='https://cdn-icons-png.flaticon.com/512/3144/3144760.png'; this.style.opacity='0.2'">
+        <img src="img/logo.png" alt="Cor de Abóbora Confeitaria"
+            class="w-auto h-48 md:h-64 lg:h-80 object-contain mx-auto transition-transform duration-500 group-hover:scale-105"
+            onerror="this.src='https://cdn-icons-png.flaticon.com/512/3144/3144760.png'; this.style.opacity='0.2'">
         </div>
 
         <div class="max-w-3xl">
-            <h2 class="text-4xl md:text-6xl font-black mb-4 leading-tight text-[#3D2317]">
-                Confeitaria <span class="text-[#E67E22]">Artesanal</span>
-            </h2>
-            <p class="text-sm md:text-lg opacity-70 mb-8 max-w-xl mx-auto text-[#3D2317]">
-                Sabores inesquecíveis para os seus momentos especiais a pronta entrega! Faça o seu pedido diretamente
-                pelo WhatsApp.
-            </p>
+            <div class="text-center mb-6 md:mb-10 px-4">
+                <span
+                    class="block text-xs md:text-sm uppercase tracking-[0.4em] text-[#3D2317] opacity-0 animate-fade-down font-bold mb-2">
+                    10 Anos de
+                </span>
+
+                <h2
+                    class="text-3xl md:text-5xl lg:text-6xl font-black text-[#3D2317] leading-tight tracking-tighter opacity-0 animate-fade-up-gold">
+                    Confeitaria <span class="text-[#E67E22]">Artesanal</span>
+                </h2>
+
+                <div class="w-12 h-1 bg-[#E67E22] mx-auto mt-4 rounded-full opacity-0 animate-grow-line"></div>
+            </div>
+            <div class="space-y-4 mb-10 max-w-xl mx-auto px-2">
+                <p class="text-sm md:text-lg opacity-70 text-[#3D2317] leading-relaxed">
+                    Sabores inesquecíveis para os seus momentos especiais! Encomendas a pronta entrega.
+                </p>
+               <p class="text-sm md:text-lg opacity-70 text-[#3D2317] leading-relaxed">
+                     Faça seu pedido pelo cardápio e seja encaminhado direto para o Whatsapp!
+                </p>
+            </div>
             <div class="flex flex-wrap justify-center gap-4">
                 <a href="#catalogo"
                     class="bg-[#3D2317] text-white px-8 py-4 rounded-2xl font-bold text-sm hover:bg-[#E67E22] transition-all shadow-lg">Ver
                     Cardápio</a>
-                <button onclick="directWhatsApp('Gostaria de agendar uma retirada')"
-                    class="bg-white border-2 border-[#3D2317] px-8 py-4 rounded-2xl font-bold text-sm hover:bg-[#3D2317] hover:text-white transition-all shadow-md text-[#3D2317]">Entrega
-                    / Retirada</button>
+                <button
+                    onclick="directWhatsApp('Vim do site para saber as informações e opções bolos disponíveis a Pronta Entrega')"
+                    class="bg-white border-2 border-[#3D2317] px-8 py-4 rounded-2xl font-bold text-sm hover:bg-[#3D2317] hover:text-white transition-all shadow-md text-[#3D2317]">Consulte
+                    opções de pronta entrega</button>
             </div>
         </div>
     </header>
@@ -336,16 +406,6 @@
             </div>
 
             <div class="w-full md:w-1/2 p-8 md:p-16 space-y-8">
-                <div class="space-y-4">
-                    <h3 class="text-2xl font-bold text-[#3D2317] flex items-center gap-3">
-                        <i class="fas fa-paint-brush text-[#E67E22]"></i>
-                        Sua mensagem, nossa tela
-                    </h3>
-                    <p class="text-sm md:text-base text-[#3D2317] opacity-80 leading-relaxed">
-                        Nossos Bento Cakes são obras de arte comestíveis. Unimos a confeitaria artesanal de
-                        alta qualidade a traços divertidos e frases que capturam a essência do momento.
-                    </p>
-                </div>
 
                 <div class="space-y-4">
                     <h3 class="text-2xl font-bold text-[#3D2317] flex items-center gap-3">
@@ -623,7 +683,7 @@
                     recolher o pedido.</p>
             </div>
         </section>
-
+        <!-- Feed instagram -->
         <section id="instagram-feed" class="max-w-7xl mx-auto px-4 py-16 overflow-hidden">
             <div
                 class="bg-white rounded-[2rem] md:rounded-[3rem] p-4 md:p-12 border border-orange-100 shadow-sm flex flex-col items-center">
