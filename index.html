@@ -253,27 +253,97 @@
 
     <!-- Cabeçalho (Hero) -->
     <header class="py-12 md:py-20 px-6 text-center flex flex-col items-center justify-center">
-        <div class="flex justify-center items-center mb-8 md:mb-12 px-4">
+        <div class="relative flex justify-center items-center mb-8 md:mb-12 px-4 group">
+
+            <div class="absolute -top-6 -right-6 md:-top-10 md:-right-4 w-24 md:w-32 lg:w-40 z-20 pointer-events-none">
+                <img src="img/selo-10-anos.png" alt="Selo 10 Anos - Desde 2015" class="w-full h-full object-contain">
+            </div>
+
             <img src="img/logo.png" alt="Cor de Abóbora Confeitaria"
-                class="w-auto h-32 md:h-48 lg:h-56 object-contain mx-auto"
+                class="w-auto h-48 md:h-64 lg:h-80 object-contain mx-auto transition-transform duration-500 group-hover:scale-105"
                 onerror="this.src='https://cdn-icons-png.flaticon.com/512/3144/3144760.png'; this.style.opacity='0.2'">
         </div>
+
         <div class="max-w-3xl">
-            <h2 class="text-4xl md:text-6xl font-black mb-4 leading-tight text-[#3D2317]">Confeitaria <span
-                    class="text-[#E67E22]">Artesanal</span></h2>
-            <p class="text-sm md:text-lg opacity-70 mb-8 max-w-xl mx-auto">Sabores inesquecíveis para os seus momentos
-                especiais. Faça o seu pedido diretamente pelo WhatsApp.</p>
+            <h2 class="text-4xl md:text-6xl font-black mb-4 leading-tight text-[#3D2317]">
+                Confeitaria <span class="text-[#E67E22]">Artesanal</span>
+            </h2>
+            <p class="text-sm md:text-lg opacity-70 mb-8 max-w-xl mx-auto text-[#3D2317]">
+                Sabores inesquecíveis para os seus momentos especiais a pronta entrega! Faça o seu pedido diretamente
+                pelo WhatsApp.
+            </p>
             <div class="flex flex-wrap justify-center gap-4">
                 <a href="#catalogo"
                     class="bg-[#3D2317] text-white px-8 py-4 rounded-2xl font-bold text-sm hover:bg-[#E67E22] transition-all shadow-lg">Ver
                     Cardápio</a>
-                <a href="#localizacao"
-                    class="bg-white border-2 border-[#3D2317] px-8 py-4 rounded-2xl font-bold text-sm hover:bg-[#3D2317] hover:text-white transition-all shadow-md">Entrega
-                    / Retirada</a>
+                <button onclick="directWhatsApp('Gostaria de agendar uma retirada')"
+                    class="bg-white border-2 border-[#3D2317] px-8 py-4 rounded-2xl font-bold text-sm hover:bg-[#3D2317] hover:text-white transition-all shadow-md text-[#3D2317]">Entrega
+                    / Retirada</button>
             </div>
         </div>
     </header>
 
+    <!-- Bento Cake -->
+    <section id="bento-cake" class="max-w-7xl mx-auto px-6 py-16 md:py-24 space-y-16">
+
+        <div class="text-center max-w-3xl mx-auto">
+
+            <h2 class="text-4xl md:text-6xl font-black text-[#3D2317] leading-tight tracking-tighter">
+                Diga com um <span class="text-[#E67E22]">Bento.</span>
+            </h2>
+            <div
+                class="inline-flex items-center gap-2 bg-[#FFF5E1] px-4 py-2 rounded-full border border-[#E67E22]/10 mb-4">
+                <i class="fas fa-certificate text-[#E67E22] text-xs"></i>
+                <span class="text-[10px] font-bold uppercase tracking-widest text-[#3D2317]">+500 pedidos
+                    Entregues</span>
+            </div>
+            <p class="mt-6 text-base md:text-lg text-[#3D2317] opacity-70 leading-relaxed">
+                Muito mais que um bolo: uma tela em branco para a sua mensagem mais criativa, ácida ou carinhosa.
+            </p>
+        </div>
+
+        <div
+            class="bg-white rounded-[3rem] shadow-xl border border-orange-100 overflow-hidden flex flex-col md:flex-row items-center">
+
+            <div class="w-full md:w-1/2 h-[450px] bg-orange-50 relative">
+                <video class="w-full h-full object-cover" autoplay muted loop playsinline>
+                    <source src="img/video-bento-cake.mp4" type="video/mp4">
+                    Seu navegador não suporta vídeos.
+                </video>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#3D2317]/30 to-transparent"></div>
+            </div>
+
+            <div class="w-full md:w-1/2 p-8 md:p-16 space-y-8">
+                <div class="space-y-4">
+                    <h3 class="text-2xl font-bold text-[#3D2317] flex items-center gap-3">
+                        <i class="fas fa-paint-brush text-[#E67E22]"></i>
+                        Sua mensagem, nossa tela
+                    </h3>
+                    <p class="text-sm md:text-base text-[#3D2317] opacity-80 leading-relaxed">
+                        Nossos Bento Cakes são obras de arte comestíveis. Unimos a confeitaria artesanal de
+                        alta qualidade a traços divertidos e frases que capturam a essência do momento.
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-2xl font-bold text-[#3D2317] flex items-center gap-3">
+                        <i class="fas fa-laugh-squint text-[#E67E22]"></i>
+                        O presente inesquecível
+                    </h3>
+                    <p class="text-sm md:text-base text-[#3D2317] opacity-80 leading-relaxed">
+                        Por que dar um cartão se você pode dar um bolo engraçado? É a combinação perfeita de humor e
+                        sabor que garante risadas e posts no Instagram!
+                    </p>
+                </div>
+
+                <button onclick="directWhatsApp('Gostaria de criar um Bento Cake com uma frase divertida')"
+                    class="group w-full md:w-auto bg-[#E67E22] text-white px-8 py-5 rounded-2xl font-black flex items-center justify-center gap-3 hover:bg-[#3D2317] transition-all shadow-lg hover:shadow-orange-200">
+                    <i class="fas fa-magic group-hover:rotate-12 transition-transform"></i>
+                    <span class="uppercase text-sm tracking-wider">Criar o meu agora</span>
+                </button>
+            </div>
+        </div>
+    </section>
     <main class="max-w-7xl mx-auto px-4 md:px-6 space-y-16 pb-20">
         <!-- Catálogo de Sabores -->
         <div id="catalogo" class="text-center">
@@ -382,12 +452,14 @@
                                 class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center font-bold text-[#E67E22] text-xs">
                                 A</div>
                             <div>
-                                <p class="font-bold text-[13px] group-hover:text-[#E67E22] transition-colors">Lucas Godoy Florão de Lima</p>
+                                <p class="font-bold text-[13px] group-hover:text-[#E67E22] transition-colors">Lucas
+                                    Godoy Florão de Lima</p>
                             </div>
                             <i class="fab fa-google ml-auto text-gray-300 text-xs group-hover:text-[#E67E22]"></i>
                         </div>
                         <p class="text-[11px] italic opacity-70 leading-relaxed text-[#3D2317]">
-                            "Excelente profissional, bolos maravilhosos. Sempre pedimos, pois o valor é atrativo e o cardápio variável!"
+                            "Excelente profissional, bolos maravilhosos. Sempre pedimos, pois o valor é atrativo e o
+                            cardápio variável!"
                         </p>
                     </a>
                 </div>
@@ -422,30 +494,83 @@
                     </p>
                 </div>
 
+
+
                 <div
-                    class="flex items-center gap-3 bg-[#FFF5E1] border-2 border-[#3D2317]/5 py-2 px-4 rounded-full mt-2 self-center md:self-start">
-                    <div class="relative flex items-center justify-center">
-                        <i class="fas fa-certificate text-3xl text-[#E67E22]"></i>
-                        <span class="absolute text-white font-black text-xs">10</span>
+                    class="flex-1 w-full h-[300px] md:h-[400px] rounded-[2.5rem] overflow-hidden shadow-inner border-4 border-[#3D2317]/5">
+                    <img src="img/Tati.jpeg" alt="Interior da Confeitaria Cor de Abóbora ou Foto de Bolo Artesanal"
+                        class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500">
+                </div>
+        </section>
+        <!-- Informações Importantes -->
+        <section id="info-importantes" class="max-w-7xl mx-auto px-4 py-12">
+            <div class="bg-white rounded-[3rem] p-8 md:p-12 border border-orange-100 shadow-sm">
+                <div class="flex items-center gap-3 mb-8">
+                    <i class="fas fa-info-circle text-[#E67E22] text-2xl"></i>
+                    <h3 class="text-2xl font-black uppercase tracking-tighter text-[#3D2317]">
+                        Informações <span class="text-[#E67E22]">Importantes</span>
+                    </h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="flex gap-4 p-4 rounded-2xl bg-orange-50/50">
+                        <i class="fas fa-balance-scale text-[#E67E22] mt-1"></i>
+                        <p class="text-sm opacity-80">O peso dos bolos pode variar de <strong>10 a 20%</strong> por ser
+                            artesanal (valor final via foto na balança).</p>
                     </div>
-                    <div class="flex flex-col">
-                        <span class="text-[#3D2317] font-bold text-sm leading-none">Anos de Tradição</span>
-                        <span class="text-[#922B21] font-medium text-[10px] uppercase tracking-wider">Qualidade
-                            Garantida</span>
+
+                    <div class="flex gap-4 p-4 rounded-2xl bg-orange-50/50">
+                        <i class="fas fa-birthday-cake text-[#E67E22] mt-1"></i>
+                        <p class="text-sm opacity-80">A cobertura de <strong>Chantininho</strong> é padrão em todos os
+                            bolos, sem cobrança adicional.</p>
+                    </div>
+
+                    <div class="flex gap-4 p-4 rounded-2xl bg-orange-50/50">
+                        <i class="fas fa-layer-group text-[#E67E22] mt-1"></i>
+                        <p class="text-sm opacity-80">Bolos <strong>Decorados e Nobres</strong> são finalizados em cake
+                            board de MDF sem custo adicional.</p>
+                    </div>
+
+                    <div class="flex gap-4 p-4 rounded-2xl bg-orange-50/50">
+                        <i class="fas fa-star text-[#E67E22] mt-1"></i>
+                        <p class="text-sm opacity-80">Parceria para confecção de <strong>Topo de Bolo</strong> completo
+                            com nome e idade
+                            por R$ 25,00/35,00.</p>
+                    </div>
+
+                    <div class="flex gap-4 p-4 rounded-2xl bg-orange-50/50">
+                        <i class="fas fa-scroll text-[#E67E22] mt-1"></i>
+                        <p class="text-sm opacity-80">Opção de personalização com <strong>Papel Arroz</strong> por
+                            apenas R$ 15,00 a folha.</p>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div
-                class="flex-1 w-full h-[300px] md:h-[400px] rounded-[2.5rem] overflow-hidden shadow-inner border-4 border-[#3D2317]/5">
-                <img src="caminho/para/sua-foto.jpg"
-                    alt="Interior da Confeitaria Cor de Abóbora ou Foto de Bolo Artesanal"
-                    class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500">
+        <section class="max-w-7xl mx-auto px-4 pb-20">
+            <div class="bg-[#3D2317] rounded-[3rem] p-10 md:p-16 text-center relative overflow-hidden shadow-2xl">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-[#E67E22] opacity-10 rounded-full -mr-32 -mt-32"></div>
+
+                <h3 class="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">
+                    Gostaria de um bolo <span class="text-[#E67E22]">Retangular</span> ou <span
+                        class="text-[#E67E22]">Personalizado</span>?
+                </h3>
+                <p class="text-white/70 mb-10 max-w-2xl mx-auto">
+                    Para bolos retangulares (a partir de 3kg), decorações Bento Cake, Glitter ou coberturas especiais
+                    (Buttercream), fale diretamente conosco!
+                </p>
+
+                <div class="flex flex-col md:flex-row justify-center items-center gap-4">
+                    <button onclick="directWhatsApp('Gostaria de informações sobre Bolos Retangulares e Adicionais')"
+                        class="w-full md:w-auto bg-[#25D366] text-white px-10 py-5 rounded-2xl font-black flex items-center justify-center gap-3 hover:scale-105 transition-transform shadow-xl">
+                        <i class="fab fa-whatsapp text-2xl"></i> TIRAR DÚVIDAS NO WHATSAPP
+                    </button>
+                </div>
             </div>
         </section>
 
         <!-- Localização -->
-        <section id="localizacao" class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+        <section id="localizacao" class="grid grid-cols-1 md:grid-cols-2 gap- items-stretch">
             <div class="bg-[#3D2317] text-white rounded-[3rem] p-8 md:p-12 flex flex-col justify-center shadow-xl">
                 <h3 class="text-xl font-bold mb-6 italic">Ponto de Retirada</h3>
                 <div class="space-y-6">
@@ -476,6 +601,60 @@
                     recolher o pedido.</p>
             </div>
         </section>
+
+<section id="instagram-feed" class="max-w-7xl mx-auto px-4 py-16">
+    <div class="bg-white rounded-[3rem] p-6 md:p-12 border border-orange-100 shadow-sm flex flex-col items-center">
+        
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center gap-2 bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white px-4 py-1 rounded-full mb-4 shadow-md">
+                <i class="fab fa-instagram text-xs"></i>
+                <span class="text-[10px] font-bold uppercase tracking-widest text-white">Instagram</span>
+            </div>
+            <h3 class="text-3xl md:text-4xl font-black text-[#3D2317] tracking-tighter">
+                Siga nosso <span class="text-[#E67E22]">Trabalho</span>
+            </h3>
+        </div>
+
+        <div class="w-full flex justify-center overflow-visible">
+            <div class="instagram-container w-full max-w-[540px] rounded-3xl shadow-2xl border-4 md:border-8 border-orange-50 bg-white">
+                
+                <blockquote class="instagram-media" 
+                    data-instgrm-captioned 
+                    data-instgrm-permalink="https://www.instagram.com/reel/DWSO92REUO9/?utm_source=ig_embed&amp;utm_campaign=loading" 
+                    data-instgrm-version="14" 
+                    style="background:#FFF; border:0; border-radius:15px; margin: 0; width:100%;">
+                    </blockquote>
+                
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <a href="https://www.instagram.com/cordeaboborabolos" target="_blank" 
+               class="bg-[#3D2317] text-white px-8 py-4 rounded-2xl font-bold text-sm hover:bg-[#E67E22] transition-all flex items-center gap-3 shadow-lg group">
+               <i class="fab fa-instagram text-xl group-hover:rotate-12 transition-transform"></i>
+               @CORDEABOBORABOLOS
+            </a>
+        </div>
+    </div>
+</section>
+
+<script async src="//www.instagram.com/embed.js"></script>
+
+<style>
+    /* Correção para o card não cortar e permitir o play */
+    .instagram-container {
+        min-height: 400px; /* Garante espaço inicial antes do carregamento */
+        transition: height 0.3s ease;
+    }
+    
+    /* Força o iframe do Instagram a ocupar 100% do container sem margens extras */
+    iframe.instagram-media {
+        margin: 0 !important;
+        border-radius: 15px !important;
+        width: 100% !important;
+    }
+</style>
+        
     </main>
 
     <!-- Carrinho Lateral -->
@@ -626,11 +805,11 @@
             {
                 id: 'trad-1', title: 'Tradicionais I', price: 57.90, color: '#E67E22',
                 items: [
-                    { name: 'Prestígio Cremoso', desc: 'Massa de chocolate com recheio de beijinho de coco artesanal.', img: '' },
-                    { name: 'Cocada Cremosa', desc: 'Sabor tropical com coco fresco ralado e creme suave.', img: '' },
-                    { name: 'Ouro Branco', desc: 'Inspirado no bombom, com camadas de chocolate branco e waffer.', img: '' },
-                    { name: 'Sonho de Valsa', desc: 'Recheio irresistível de amendoim e chocolate ao leite.', img: '' },
-                    { name: 'Oreo com Creme', desc: 'A combinação perfeita de biscoito Oreo com creme tipo belga.', img: '' }
+                    { name: 'Prestígio Cremoso', desc: 'set description and image.', img: '' },
+                    { name: 'Cocada Branca', desc: 'Delicioso creme belga com coco Sococo.', img: 'img/cocada-branca-tradicional1.jpeg' },
+                    { name: 'Ouro Branco', desc: 'set description and image.', img: 'img/ouro-branco-tradicional1.jpeg' },
+                    { name: 'Sonho de Valsa', desc: 'set description and image.', img: 'img/sonho-de-valsa-tradicional1.jpeg' },
+                    { name: 'Oreo com Creme', desc: 'set description and image.', img: 'img/oreo-com-creme-tradicional1.jpeg' }
                 ]
             },
             {
@@ -646,21 +825,22 @@
             {
                 id: 'esp-1', title: 'Especiais I', price: 64.90, color: '#922B21',
                 items: [
-                    { name: 'Morango + Ninho', desc: 'Massa branca, leite Ninho e morangos frescos selecionados.', img: 'dois-amores' },
-                    { name: 'Morango + Brigadeiro', desc: 'A clássica dupla Sensação: chocolate e morango.', img: '' },
-                    { name: 'Abacaxi Creme Belga', desc: 'Abacaxi cozido com suave creme de baunilha belga.', img: '' },
-                    { name: 'Uva Thompson', desc: 'Uvas verdes sem semente com brigadeiro de Ninho.', img: '' },
-                    { name: 'Brigadeiro de Nutella', desc: 'Brigadeiro intenso com a original Nutella.', img: '' },
+                    { name: 'Dois Amores', desc: 'Massa Mista Brig de Ninho e Brig de Chocolate 50%', img: 'img/dois-amores-especial1.jpeg' },
+                    { name: 'Uva Thompson', desc: 'Uvas verdes sem semente com brigadeiro de Ninho.', img: 'img/uva-tompson-especial1.jpeg' },
+                    { name: 'Morango + Brigadeiro', desc: 'A clássica dupla Sensação: chocolate e morango.', img: 'img/morango-brigadeiro-especial1.jpeg' },
+                    { name: 'Abacaxi Creme Belga', desc: 'Abacaxi cozido com suave creme de baunilha belga.', img: 'img/abacaxi-creme-belga-especial1.jpeg' },
+                    { name: 'Brigadeiro de Nutella', desc: 'Brigadeiro intenso com a original Nutella.', img: 'img/brigadeiro-nutella-especial1.jpeg' },
                 ]
             },
             {
                 id: 'esp-2', title: 'Especiais II', price: 68.90, color: '#922B21',
                 items: [
-                    { name: 'Estrogonofe de Nozes', desc: 'Creme rico de nozes com pedaços crocantes.', img: '' },
-                    { name: 'Nutella com Morango', desc: 'Nutella pura com morangos frescos fatiados.', img: '' },
-                    { name: 'Ninho e Nutella', desc: 'A dupla mais amada: Leite Ninho e Nutella.', img: '' },
-                    { name: 'Morango e Suspiro', desc: 'Morangos frescos com o crocante do suspiro caseiro.', img: '' },
-                    { name: 'Abacaxi Coco Sweet', desc: 'Abacaxi, creme e um toque doce de coco.', img: '' },
+                    { name: 'Estrogonofe de Nozes', desc: 'Massa branca, nozes caramelizadas e um delicioso brigadeiro toffe.', img: 'img/estrog-nozes-especial3.jpeg' },
+                    { name: 'Morango e Suspiro', desc: 'Morango fresco, delicioso creme belga e suspiros.', img: 'img/morango-suspiro-especial2.jpeg' },
+                    { name: 'Abacaxi Coco Sweet', desc: 'Abacaxi fresco com Delicioso creme belga.', img: 'img/abacaxi-coco-especial2.jpeg' },
+                    { name: 'Nutella com Morango', desc: 'Nutella pura com morangos frescos fatiados.', img: 'img/nutella-morango-especial4.jpeg' },
+                    { name: 'Ninho e Nutella', desc: 'A dupla mais amada: Leite Ninho e Nutella.', img: 'img/ninho-nutella-especial5.jpeg' },
+                    
 
                 ]
             },
@@ -677,9 +857,10 @@
             {
                 id: 'nobres', title: 'Linha Nobre', price: 95.90, color: '#3D2317', isNobre: true,
                 items: [
+                    { name: 'Ninho e Frutas Vermelhas', desc: 'Ninho com geleia artesanal de amora, morango e framboesa.', img: 'img/ninho-geleia-frutas-nobre.jpeg' },
                     { name: 'Choco Amargo e Morango', desc: 'Sofisticação do chocolate meio amargo com morangos.', img: '' },
-                    { name: 'Pistache Natural', desc: 'O legítimo brigadeiro de pistache com pistaches inteiros.', img: '' },
-                    { name: 'Ninho e Frutas Vermelhas', desc: 'Ninho com geleia artesanal de amora, morango e framboesa.', img: '' }
+                    { name: 'Pistache Natural', desc: 'O legítimo brigadeiro de pistache com pistaches inteiros.', img: '' }
+                   
                 ]
             }
         ];
@@ -847,9 +1028,13 @@
                 const btnId = `btn-add-${cat.id}-${idx}`;
                 return `
                                         <div class="product-card">
-                                            <div class="img-container">
-                                                <i class="fas fa-birthday-cake text-2xl opacity-10"></i>
-                                            </div>
+                                        
+<div class="img-container">
+    ${item.img ?
+                        `<img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover rounded-2xl">` :
+                        `<i class="fas fa-birthday-cake text-2xl opacity-10"></i>`
+                    }
+</div>
                                             <h4 class="text-[13px] font-black mb-1 leading-tight">${item.name}</h4>
                                             <p class="text-[10px] opacity-60 flex-grow mb-3 leading-relaxed">${item.desc}</p>
                                             <button id="${btnId}" 
@@ -876,6 +1061,18 @@
             cart.forEach(i => { msg += `• *${i.name}* (${i.weight.toFixed(1).replace('.', ',')} KG)%0A  R$ ${(i.price * i.weight).toFixed(2).replace('.', ',')}%0A%0A`; });
             const total = cart.reduce((s, i) => s + (i.price * i.weight), 0);
             msg += `----------------------------%0A*Pagamento:* ${selectedPayment}%0A*TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*%0A%0A_Plataforma por Core Build._`;
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+        }
+
+        /**
+         * directWhatsApp(contexto): Envia uma mensagem direta para o WhatsApp
+         * @param {string} contexto - O texto personalizado que descreve o interesse do cliente.
+         */
+        function directWhatsApp(contexto) {
+            // Codificamos o texto para que espaços e acentos funcionem no link da URL
+            const msg = encodeURIComponent(`Olá! ${contexto}._Vindo do site Cor de Abóbora._`);
+
+            // Abrimos o WhatsApp em uma nova aba com a mensagem pronta
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
         }
 
