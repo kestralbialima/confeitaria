@@ -370,23 +370,41 @@
 
                 <div class="w-12 h-1 bg-[#E67E22] mx-auto mt-4 rounded-full opacity-0 animate-grow-line"></div>
             </div>
-            <div class="space-y-4 mb-10 max-w-xl mx-auto px-2">
-                <p class="text-sm md:text-lg opacity-70 text-[#3D2317] leading-relaxed">
-                    Sabores inesquecíveis para os seus momentos especiais! Encomendas e pronta entrega.
-                </p>
-                <p class="text-sm md:text-lg opacity-70 text-[#3D2317] leading-relaxed">
-                    Faça seu pedido pelo cardápio e seja encaminhado direto para o Whatsapp!
-                </p>
-            </div>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#catalogo"
-                    class="bg-[#3D2317] text-white px-8 py-4 rounded-2xl font-bold text-sm hover:bg-[#E67E22] transition-all shadow-lg">Ver
-                    Cardápio</a>
-                <button
-                    onclick="directWhatsApp('Vim do site para saber as informações e opções bolos disponíveis a Pronta Entrega')"
-                    class="bg-white border-2 border-[#3D2317] px-8 py-4 rounded-2xl font-bold text-sm hover:bg-[#3D2317] hover:text-white transition-all shadow-md text-[#3D2317]">Consulte
-                    opções de pronta entrega</button>
-            </div>
+           <div class="space-y-8 mb-12 max-w-2xl mx-auto px-4 text-center">
+    
+    <div class="space-y-2">
+        <p class="text-lg md:text-xl font-medium text-[#3D2317] leading-relaxed">
+            Sabores inesquecíveis para <br class="md:hidden"> 
+            <span class="text-[#E67E22] font-black">os seus momentos especiais!</span>
+        </p>
+    </div>
+
+    <p class="text-base md:text-lg opacity-80 text-[#3D2317] leading-relaxed italic">
+        Criando memórias para sua <strong>família e amigos</strong>, <br class="hidden md:block">
+        e agregando valor para os eventos da sua <strong>empresa</strong>.
+    </p>
+
+    <div class="pt-4 border-t border-[#3D2317]/10">
+        <p class="text-sm md:text-base font-bold text-[#E67E22] uppercase tracking-widest mb-2">
+            Encomendas & Pronta entrega!
+        </p>
+        <p class="text-sm md:text-base opacity-70 text-[#3D2317]">
+            Faça seu pedido pelo cardápio e seja encaminhado direto para o Whatsapp!
+        </p>
+    </div>
+</div>
+
+<div class="flex flex-col md:flex-row items-center justify-center gap-4">
+    <a href="#catalogo"
+        class="w-full md:w-auto bg-[#3D2317] text-white px-10 py-5 rounded-2xl font-bold text-base hover:bg-[#E67E22] transition-all shadow-xl text-center">
+        Ver Cardápio
+    </a>
+    <button
+        onclick="directWhatsApp('Olá! Vim do site para saber as informações e opções de bolos disponíveis a Pronta Entrega')"
+        class="w-full md:w-auto bg-white border-2 border-[#3D2317] px-10 py-5 rounded-2xl font-bold text-base hover:bg-[#3D2317] hover:text-white transition-all shadow-md text-[#3D2317] text-center">
+        Consulte Pronta Entrega
+    </button>
+</div>
         </div>
     </header>
 
@@ -396,7 +414,7 @@
         <div class="text-center max-w-3xl mx-auto">
 
             <h2 class="text-4xl md:text-6xl font-black text-[#3D2317] leading-tight tracking-tighter">
-                Diga com um <span class="text-[#E67E22]">Bento.</span>
+                Surpreenda com um <span class="text-[#E67E22]">Bento.</span>
             </h2>
             <div
                 class="inline-flex items-center gap-2 bg-[#FFF5E1] px-4 py-2 rounded-full border border-[#E67E22]/10 mb-4">
@@ -437,7 +455,8 @@
                     </p>
                 </div>
 
-                <button onclick="directWhatsApp('Gostaria de criar um Bento Cake com uma frase divertida')"
+                <button
+                    onclick="directWhatsApp('Ola! Gostaria de criar um Bento Cake com frase e desenho personalizado. Poderia me passar as informações?')"
                     class="group w-full md:w-auto bg-[#E67E22] text-white px-8 py-5 rounded-2xl font-black flex items-center justify-center gap-3 hover:bg-[#3D2317] transition-all shadow-lg hover:shadow-orange-200">
                     <i class="fas fa-magic group-hover:rotate-12 transition-transform"></i>
                     <span class="uppercase text-sm tracking-wider">Criar o meu agora</span>
@@ -451,6 +470,13 @@
             <h2 class="text-3xl md:text-4xl font-bold text-[#3D2317] mb-2 uppercase tracking-tighter">Nossos <span
                     class="text-[#E67E22]">Sabores</span></h2>
             <div class="w-20 h-1.5 bg-[#E67E22] mx-auto rounded-full"></div>
+        </div>
+        <!-- lactose -->
+        <div class="text-center mb-3 md:mb-10 px-2">
+            <span
+                class="block text-xs md:text-sm uppercase tracking-[0.1em] text-[#3D2317] opacity-0 animate-fade-down font-bold mb-2">
+                Disponível na versão sem lactose com adicional
+            </span>
         </div>
 
         <div id="menu-categories" class="space-y-8"></div>
@@ -527,7 +553,8 @@
                             <i class="fab fa-google ml-auto text-gray-300 text-xs group-hover:text-[#E67E22]"></i>
                         </div>
                         <p class="text-[13px] italic opacity-70 leading-relaxed text-[#3D2317]">
-                            "tendimento incrível, bolos maravilhosos, sempre muito bem caprichados, e deliciosos pegamos
+                            "Atendimento incrível, bolos maravilhosos, sempre muito bem caprichados, e deliciosos
+                            pegamos
                             a anos"
                         </p>
                     </a>
@@ -675,16 +702,16 @@
                 <div class="absolute top-0 right-0 w-64 h-64 bg-[#E67E22] opacity-10 rounded-full -mr-32 -mt-32"></div>
 
                 <h3 class="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">
-                    Gostaria de um bolo <span class="text-[#E67E22]">Retangular</span> ou <span
-                        class="text-[#E67E22]">Personalizado</span>?
+                    Gostaria de um <span class="text-[#E67E22]">Bolo Personalizado</span> <br class="hidden md:block">
+                    ou para um Evento Exclusivo?
                 </h3>
                 <p class="text-white/70 mb-10 max-w-2xl mx-auto">
-                    Para bolos retangulares (a partir de 3kg), decorações Bento Cake, Glitter ou coberturas especiais
-                    (Buttercream), fale diretamente conosco!
+                    Bolos para Casamento, Aniversário de 1 ano, 15 anos, Bodas, Chás Revelação e Bebê, Formaturas,
+                    Inaugurações, Open House, Lançamentos, fale diretamente conosco!
                 </p>
 
                 <div class="flex flex-col md:flex-row justify-center items-center gap-4">
-                    <button onclick="directWhatsApp('Gostaria de informações sobre Bolos Retangulares e Adicionais')"
+                    <button onclick="directWhatsApp('Ola, vim do site, e tenho interesse em Bolos Personalizados ou Ocasiões Exclusivas! Poderia me passar informações?')"
                         class="w-full md:w-auto bg-[#25D366] text-white px-10 py-5 rounded-2xl font-black flex items-center justify-center gap-3 hover:scale-105 transition-transform shadow-xl">
                         <i class="fab fa-whatsapp text-2xl"></i> TIRAR DÚVIDAS NO WHATSAPP
                     </button>
@@ -719,7 +746,13 @@
                                     class="font-semibold text-white">09h às 13h</span></p>
                         </div>
                     </div>
-
+ <div
+            class="bg-white rounded-[3rem] border-2 border-dashed border-[#E67E22]/20 flex flex-col items-center justify-center text-center p-8 shadow-sm">
+            <i class="fas fa-car text-3xl text-[#E67E22] mb-3"></i>
+            <p class="text-[#3D2317] font-bold mb-1 text-sm">Pessoalmente ou Aplicativo</p>
+            <p class="text-[11px] opacity-60">Pode retirar pessoalmente ou solicitar um motorista de aplicativo para
+                recolher o pedido.</p>
+        </div>
                     <div class="pt-4">
                         <a href="https://www.google.com/maps/dir//R.+Pinheiro+Guimar%C3%A3es,+283+-+Port%C3%A3o,+Curitiba+-+PR,+80330-250/"
                             target="_blank" rel="noopener noreferrer"
@@ -730,7 +763,7 @@
                     </div>
                 </div>
             </div>
-
+  
             <div class="rounded-[3rem] overflow-hidden min-h-[350px] shadow-xl border-4 border-[#3D2317] relative">
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3602.148283626154!2d-49.2974343!3d-25.4667233!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dce30f24ba4497%3A0x6a2c2daeebe62cb!2sR.%20Pinheiro%20Guimar%C3%A3es%2C%20283%20-%20Port%C3%A3o%2C%20Curitiba%20-%20PR%2C%2080330-250!5e0!3m2!1spt-BR!2sbr!4v1715000000000!5m2!1spt-BR!2sbr"
@@ -739,14 +772,7 @@
                 </iframe>
             </div>
         </section>
-        <div
-            class="bg-white rounded-[3rem] border-2 border-dashed border-[#E67E22]/20 flex flex-col items-center justify-center text-center p-8 shadow-sm">
-            <i class="fas fa-car text-3xl text-[#E67E22] mb-3"></i>
-            <p class="text-[#3D2317] font-bold mb-1 text-sm">Pessoalmente ou Aplicativo</p>
-            <p class="text-[11px] opacity-60">Pode retirar pessoalmente ou solicitar um motorista de aplicativo para
-                recolher o pedido.</p>
-        </div>
-        </section>
+     
         <!-- Feed instagram -->
         <section id="instagram-feed" class="max-w-7xl mx-auto px-4 py-16 overflow-hidden">
             <div
@@ -787,10 +813,10 @@
         </section>
         <script async src="//www.instagram.com/embed.js"></script>
         <div class="flex justify-center py-8">
-            <button onclick="directWhatsApp('Quero viver a experiência deliciosa da Cor de Abóbora!')"
+            <button onclick="directWhatsApp('Ola, vim do site, e tenho interesse em Bolos Personalizados ou Ocasiões Exclusivas! Poderia me passar informações?')"
                 class="group relative bg-[#D2122E] text-white px-10 py-6 rounded-2xl font-black text-sm md:text-base uppercase tracking-widest shadow-[0_10px_40px_rgba(210,18,46,0.4)] hover:bg-[#B01026] transition-all hover:-translate-y-2 active:scale-95 flex items-center gap-4 overflow-hidden">
 
-                <span class="relative z-10">Viver essa experiência agora!</span>
+                <span class="relative z-10">Quero o cardápio agora para fazer o meu pedido</span>
                 <i class="fas fa-arrow-right relative z-10 group-hover:translate-x-2 transition-transform"></i>
 
                 <div class="absolute inset-0 w-full h-full">
@@ -949,41 +975,42 @@
             {
                 id: 'trad-1', title: 'Tradicionais I', price: 57.90, color: '#E67E22',
                 items: [
-                    { name: 'Prestígio Cremoso', desc: 'Massa Chocolate Recheio Creme tipo Belga e Coco Sweet.', img: 'img/prestigio-tradicional1.jpeg' },
-                    { name: 'Cocada cremosa', desc: 'Delicioso creme belga com coco Sococo.', img: 'img/cocada-branca-tradicional1.jpeg' },
-                    { name: 'Ouro Branco', desc: 'Creme tipo Belga e Ouro Branco em pedaços.', img: 'img/creme-belga-ouro-branco-tradicional1.jpeg' },
-                    { name: 'Sonho de Valsa', desc: 'Creme Tipo Belga com bombons Picados.', img: 'img/sonho-valsa-tradicional1.jpeg' },
-                    { name: 'Oreo com Creme', desc: 'Creme tipo belga e biscoito Oreo em pedacos. Massa Mista .', img: 'img/creme-belga-oreo-tradicional1.jpeg' }
+                    { name: 'Prestígio', desc: 'Massa Chocolate Recheio Creme tipo Belga e Coco Sweet.', img: 'img/trad1-prestigio.jpeg' },
+                    { name: 'Ouro Branco', desc: 'Creme tipo Belga e Ouro Branco em pedaços.', img: 'img/trad1-ourobranco.jpeg' },
+                    { name: 'Oreo com Creme', desc: 'Creme tipo belga e biscoito Oreo em pedacos. Massa Mista.', img: 'img/trad1-oreo.jpeg' },
+                    { name: 'Cocada cremosa', desc: 'Delicioso creme belga com coco Sococo.', img: 'img/trad1-cocada.jpeg' },
+                    { name: 'Sonho de Valsa', desc: 'Creme Tipo Belga com bombons Picados e massa mista.', img: 'img/trad1-valsa.jpeg' },
+
                 ]
             },
             {
                 id: 'trad-2', title: 'Tradicionais II', price: 59.90, color: '#E67E22',
                 items: [
-                    { name: 'Cocada cremosa', desc: 'Creme belga com coco Sweet. Massa branca.', img: 'img/cocada-cremosa-tradicional2.jpeg' },
-                    { name: 'Brigadeiro de Ninho', desc: 'Recheio cremoso do legítimo Leite Ninho.', img: 'img/brigadeiro-ninho-tradicional2.jpeg' },
-                    { name: 'Quatro Leites', desc: 'Blend especial de leites que derrete na boca.', img: 'img/quatro-leites-tradicional2.jpeg' },
-                    { name: 'Beijinho', desc: 'Tradicional doce de coco em versão bolo super molhadinho.', img: 'img/beijinho-tradicional2.jpeg' },
-                    { name: 'Brigadeiro de Caramelo', desc: 'Brigadeiro gourmet com toque de caramelo salgado.', img: 'img/caramelo-tradicional2.jpeg' }
+                    { name: 'Quatro Leites', desc: 'Leite ninho, leite de coco, creme de leite e leite condensado torna um Brigadeiro bem suave.', img: 'img/trad2-quatrol.jpeg' },
+                    { name: 'Brigadeiro de Ninho', desc: 'Recheio cremoso do legítimo Leite Ninho.', img: 'img/trad2-ninho.jpeg' },
+                    { name: 'Brigadeiro', desc: 'Massa de chocolate 50% e brigadeiro de chocolate 50%.', img: 'img/trad2-brigadeiro.jpeg' },
+                    { name: 'Beijinho', desc: 'massa branca com recheio de brigadeiro com coco sweet.', img: 'img/trad2-beijinho.jpeg' },
+                    { name: 'Brigadeiro de Caramelo', desc: 'Massa branca bem úmida e 2 camadas de caramelo artesanal.', img: 'img/trad2-caramelo.jpeg' }
                 ]
             },
             {
                 id: 'esp-1', title: 'Especiais I', price: 64.90, color: '#922B21',
                 items: [
-                    { name: 'Morango + Brigadeiro', desc: 'A clássica dupla Sensação: chocolate e morango.', img: 'img/morango-brig-especial1.jpeg' },
-                    { name: 'Dois Amores', desc: 'Massa Mista Brig de Ninho e Brig de Chocolate 50%', img: 'img/dois-amores-especial1.jpeg' },
-                    { name: 'Uva Thompson', desc: 'Uvas verdes sem semente com brigadeiro de Ninho.', img: 'img/uva-tompson-especial1.jpeg' },
-                    { name: 'Abacaxi Creme Belga', desc: 'Abacaxi cozido com suave creme de baunilha belga.', img: 'img/abacaxi-coco-especial1.jpeg' },
-                    { name: 'Brigadeiro de Nutella', desc: 'Delicioso brigadeiro 50% com Nutella.', img: 'img/brigadeiro-nutela-especial1.jpeg' },
+                    { name: 'Morango + Brigadeiro', desc: 'brigadeiro de chocolate 50% e morangos frescos.', img: 'img/esp1-morango.jpeg' },
+                    { name: 'KitKat', desc: 'Brigadeiro 50% cacau e KitKat em pedaços.', img: 'img/esp1-kitkat.jpeg' },
+                    { name: 'Uva Thompson', desc: 'Uvas Thompson sem semente com brigadeiro de Ninho.', img: 'img/esp1-uva.jpeg' },
+                    { name: 'Abacaxi com Creme e Coco', desc: 'Abacaxi fresco com creme tipo belga e coco sweet.', img: 'img/esp1-abacaxi.jpeg' },
+                    { name: 'Brigadeiro de Nutella', desc: 'Delicioso brigadeiro 50% com Nutella.', img: 'img/esp1-nutella.jpeg' },
                 ]
             },
             {
                 id: 'esp-2', title: 'Especiais II', price: 68.90, color: '#922B21',
                 items: [
-                    { name: 'Estrogonofe de Nozes', desc: 'Massa branca, nozes caramelizadas e um delicioso brigadeiro toffe.', img: 'img/estrog-nozes-especial3.jpeg' },
-                    { name: 'Morango e Suspiro', desc: 'Morango fresco, delicioso creme belga e suspiros.', img: 'img/morango-suspiro-especial2.jpeg' },
-                    { name: 'Abacaxi Coco Sweet', desc: 'Abacaxi fresco com Delicioso creme belga.', img: 'img/abacaxi-coco-especial2.jpeg' },
-                    { name: 'Nutella com Morango', desc: 'Nutella pura com morangos frescos fatiados.', img: 'img/nutella-morango-especial4.jpeg' },
-                    { name: 'Ninho e Nutella', desc: 'A dupla mais amada: Leite Ninho e Nutella.', img: 'img/ninho-nutella-especial5.jpeg' },
+                    { name: 'Estrogonofe de Nozes', desc: 'Nozes caramelizadas para criar um brigadeiro toffe delicioso.', img: 'img/esp2-nozes.jpeg' },
+                    { name: 'Morango e Suspiro', desc: 'Morango fresco, delicioso creme belga e suspiros.', img: 'img/esp2-suspiro.jpeg' },
+                    { name: 'Abacaxi Coco Sweet', desc: 'Abacaxi fresco com Delicioso creme belga.', img: 'img/esp2-abacaxi.jpeg' },
+                    { name: 'Nutella com Morango', desc: 'Nutella pura com morangos frescos fatiados.', img: 'img/esp2-nutela.jpeg' },
+                    { name: 'Ninho e Nutella', desc: 'A dupla mais amada: Leite Ninho e Nutella.', img: 'img/esp2-nutela.jpeg' },
 
 
                 ]
@@ -991,19 +1018,21 @@
             {
                 id: 'esp-3', title: 'Especiais III', price: 74.90, color: '#922B21',
                 items: [
-                    { name: 'Marta Rocha', desc: 'Clássico paranaense com suspiro, pão de ló e nozes.', img: '' },
-                    { name: 'Abacaxi Doce de Leite', desc: 'Abacaxi com doce de leite cozido na pressão.', img: '' },
-                    { name: 'Ameixa Doce de Leite', desc: 'O clássico de ameixa com doce de leite cremoso.', img: '' },
-                    { name: 'Maracujá + Choco 50%', desc: 'Contraste do mousse de maracujá com chocolate meio amargo.', img: '' },
-                    { name: 'Limão Siciliano + Choco', desc: 'Refrescância do limão siciliano com ganache 50%.', img: '' }
+                    { name: 'Marta Rocha', desc: 'Clássico paranaense com suspiro, pão de ló e nozes.', img: 'img/esp3-marta-rocha.jpeg' },
+                    { name: 'Abacaxi Doce de Leite', desc: 'Abacaxi com doce de leite cozido na pressão.', img: 'img/esp3-abacaxi.jpeg' },
+                    { name: 'Ameixa com Doce de Leite', desc: 'Delicioso doce de leite cozido na pressão com pedaços de ameixa preta.', img: 'img/esp3-ameixa.jpeg' },
+                    { name: 'Maracujá + Choco 50%', desc: 'Massa Mista com essa dupla de Brigadeiro de Maracujá e Brigadeiro de Chocolate 50%.', img: 'img/esp3-maracuja.jpeg' },
+                    { name: 'Limão Siciliano + Choco', desc: 'Massa Mista com esse dupla deliciosa de Recheio de Limão Siciliano e Brigadeiro de Chocolate .', img: 'img/esp3-limao.jpeg' }
                 ]
             },
             {
                 id: 'nobres', title: 'Linha Nobre', price: 95.90, color: '#3D2317', isNobre: true,
                 items: [
                     { name: 'Ninho e Frutas Vermelhas', desc: 'Ninho com geleia artesanal de amora, morango e framboesa.', img: 'img/ninho-geleia-frutas-nobre.jpeg' },
+                    { name: 'Brigadeiro de Castanhas e Crocante', desc: 'Delicioso Brigadeiro com Castanha de Caju e Castanha do Pará, com pedaços de Crocante de Nozes.', img: 'img/nobre-castanha.jpeg' },
+                    { name: 'Ninho e Frutas Vermelhas', desc: 'Ninho com geleia artesanal de amora, morango e framboesa.', img: 'i' },
                     { name: 'Choco Amargo e Morango', desc: 'Sofisticação do chocolate meio amargo com morangos.', img: '' },
-                    { name: 'Pistache Natural', desc: 'O legítimo brigadeiro de pistache com pistaches inteiros.', img: '' }
+                    { name: 'Pistache Natural', desc: 'O legítimo brigadeiro de pistache in natura.', img: 'img/nobre-pistache.jpeg' }
 
                 ]
             }
