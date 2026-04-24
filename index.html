@@ -429,18 +429,30 @@
 
         <div
             class="bg-white rounded-[3rem] shadow-xl border border-orange-100 overflow-hidden flex flex-col md:flex-row items-center">
+<div class="w-full md:w-1/2 h-auto md:h-[400px] bg-[#3D2317]/5 relative overflow-hidden flex items-center justify-center group">
+    
+    <video id="videoBento" class="w-full h-auto md:h-full object-contain md:object-cover" autoplay muted loop playsinline>
+        <source src="vid/bento.mp4" type="video/mp4">
+        Seu navegador não suporta vídeos.
+    </video>
 
-            <div
-                class="w-full md:w-1/2 h-auto md:h-[400px] bg-[#3D2317]/5 relative overflow-hidden flex items-center justify-center">
+    <div class="absolute inset-0 bg-gradient-to-t from-[#3D2317]/30 to-transparent pointer-events-none"></div>
 
-                <video class="w-full h-auto md:h-full object-contain md:object-cover" autoplay muted loop playsinline>
-                    <source src="vid/bento.mp4" type="video/mp4">
-                    Seu navegador não suporta vídeos.
-                </video>
+    <div class="absolute inset-0 flex items-center justify-center gap-8 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        
+        <button onclick="rewindVideo()" class="text-white hover:text-[#E67E22] transition-colors drop-shadow-lg" title="Voltar 5s">
+            <i class="fas fa-backward text-2xl"></i>
+        </button>
 
-                <div class="absolute inset-0 bg-gradient-to-t from-[#3D2317]/20 to-transparent pointer-events-none">
-                </div>
-            </div>
+        <button onclick="toggleVideo()" class="bg-white/20 backdrop-blur-md w-16 h-16 rounded-full flex items-center justify-center text-white border border-white/30 hover:scale-110 transition-all shadow-xl">
+            <i id="btnIcon" class="fas fa-pause text-2xl"></i>
+        </button>
+
+        <button onclick="forwardVideo()" class="text-white hover:text-[#E67E22] transition-colors drop-shadow-lg" title="Avançar 5s">
+            <i class="fas fa-forward text-2xl"></i>
+        </button>
+    </div>
+</div>
 
             <div class="w-full md:w-1/2 p-8 md:p-16 space-y-8">
 
@@ -626,12 +638,24 @@
                 </div>
             </div>
 
-            <div class="flex-1 w-full max-w-[320px] md:max-w-[450px] mx-auto">
-                <div class="rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-orange-50/50 bg-white">
-                    <img src="img/Tati.jpeg" alt="Tati - Confeitaria Cor de Abóbora"
-                        class="w-full h-auto object-contain block">
-                </div>
-            </div>
+           <div class="flex-1 w-full max-w-[320px] md:max-w-[450px] mx-auto">
+    <div class="rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-orange-50/50 bg-white mb-4">
+        <img src="img/Tati.jpeg" alt="Tati - Confeitaria Cor de Abóbora"
+            class="w-full h-auto object-contain block">
+    </div>
+
+    <div class="px-2">
+        <h4 class="text-xl md:text-2xl text-center font-bold text-[#3D2317] leading-tight">
+            Tati
+        </h4>
+        <p class="text-[#3D2317] opacity-70 text-center md:text-base font-light tracking-wide italic">
+            Confeiteira e Idealizadora
+        </p>
+         <p class="text-[#3D2317] opacity-70 text-center md:text-base font-light tracking-wide italic">
+            Cor de Abóbora
+        </p>
+    </div>
+</div>
 
         </section>
         <!-- Informações Importantes -->
@@ -1020,7 +1044,7 @@
             {
                 id: 'esp-2', title: 'Especiais II', price: 68.90, color: '#922B21',
                 items: [
-                    { name: 'Estrogonofe de Nozes', desc: 'Recheio de Brigadeiro branco e nozes picadas in natura.', img: 'img/esp2-nozes.jpeg' },
+                    { name: 'Estrogonofe de Nozes', desc: 'Recheio de Brigadeiro branco e nozes picadas in natura.', img: 'img/esp2-nozes1.jpeg' },
                     { name: 'Morango com Brigadeiro de Ninho', desc: 'Morango com: Brigadeiro de Ninho.', img: 'img/esp2-morangon.jpeg' }, 
                     { name: 'Abacaxi com creme e coco Sweet', desc: 'Delicioso creme belga com abacaxi fresco e coco Sweet.', img: 'img/esp2-abacaxi.jpeg' },
                     { name: 'Morango sensação', desc: 'Massa de chocolate, recheio brigadeiro branco e morangos frescos picados.', img: 'img/esp2-sensacao.jpeg' },
@@ -1263,6 +1287,7 @@
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
         }
 
+        
         // Funções de toggle de interface
         function toggleMenu() {
             const menu = document.getElementById('side-menu');
@@ -1287,6 +1312,7 @@
             if (icon) icon.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
         }
 
+        
         // Inicialização
         window.onload = () => {
             initCanvas();
@@ -1295,7 +1321,26 @@
             renderMenu();
         };
         window.addEventListener('resize', initCanvas);
+const bentoVid = document.getElementById('videoBento');
+    const bentoIcon = document.getElementById('btnIcon');
 
+    function toggleVideo() {
+        if (bentoVid.paused) {
+            bentoVid.play();
+            bentoIcon.className = 'fas fa-pause text-2xl';
+        } else {
+            bentoVid.pause();
+            bentoIcon.className = 'fas fa-play text-2xl';
+        }
+    }
+
+    function rewindVideo() {
+        bentoVid.currentTime -= 5;
+    }
+
+    function forwardVideo() {
+        bentoVid.currentTime += 5;
+    }
     </script>
 </body>
 
